@@ -1,57 +1,66 @@
 #' Download a WIOT from the second version of the WIOD project
 #'
 #' This function allows you to download a World Input-Output Table
-#' (WIOT) from the second generation of the WIOD project
-#' (www.wiod.org) for a given year. Additionally you can specify among
-#' three possible formats (wide, long, list).
+#' (WIOT) from the 2016 release of the \href{www.wiod.org}{WIOD
+#' project} for a given year. Additionally you can specify among three
+#' possible formats (wide, long, list).
 #' @param period the year of the WIOT
 #' @param format a character string to specify the needed format,
 #'     either "wide" (default), "long" or "list". See Details for more
-#'     information
+#'     information.
 #' @param as.DT a logical value: Should the "wide" or "long" formats
 #'     be returned as data.tables? Default is TRUE.
 #' @param version for (possible further) revisions. Currently not
 #'     used.
-#' @details If format = "wide" is chosen, the data is returned in a
+#' @details If \code{format = "wide"} is chosen, the data is returned in a
 #'     wide data.table. This format is the format you know from the
-#'     excel-sheets (available from www.wiod.org).
+#'     Excel sheets (available from the WIOD homepage).
 #'
-#'     The format option "long" returns a reshaped/melted
+#'     The format option \code{"long"} returns a reshaped/melted
 #'     data.table.
 #'
-#'     Finally, format = "list" returns a list of four
-#'     matrices/vectors: 1) matrix Z, the square (2464 x 2464) matrix
-#'     of intermediates, 2) matrix F, the final demand block (2464 x
-#'     220), 3) vector x, gross output per country sector, 4) vector
-#'     v, value added per country sector, 5) matrix va.block, the
-#'     valuation block (i.e. taxes, adjustments for exports,
-#'     international trade margins, etc.) and 6) 1-element vector
-#'     year, specifying the year of the WIOT.
+#'     Finally, \code{format = "list"} returns a list containing these
+#'     matrices/vectors:
+#' \enumerate{
+#' 
+#' \item matrix \strong{Z}, the square (2464 x 2464) matrix of intermediates,
+#' \item matrix \strong{F}, the final demand block (2464 x 220),
+#' \item vector \strong{x}, gross output per country sector,
+#' \item vector \strong{v}, value added per country sector,
+#' \item matrix \strong{va.block}, the valuation block (i.e. taxes, adjustments
+#'     for exports, international trade margins, etc.) and
+#' \item 1-element vector \strong{year}, specifying the year of the WIOT.
+#' }
 #' @return the function returns either a data.table (or data.frame
-#'     when as.DT = FALSE) for the chosen formats "wide" or "long", or
+#'     when \code{as.DT = FALSE}) for the chosen formats "wide" or "long", or
 #'     a list for format "list"
 #' @author Oliver Reiter
-#' @seealso \url{www.wiod.org}
-#' @references Please cite Timmer, M. P., Dietzenbacher, E., Los, B.,
-#'     Stehrer, R. and de Vries, G. J. (2015),
-#'     "An Illustrated User Guide to the World Input–Output Database: the Case of Global Automotive Production". Available
-#'     at \url{http://dx.doi.org/10.1111/roie.12178}
+#' @seealso \url{http://www.wiod.org/database/wiots16}
+#' @references 
+#' Timmer, M. P., Dietzenbacher, E., Los, B., Stehrer, R. and de
+#' Vries, G. J. (2015),
+#' "An Illustrated User Guide to the World Input–Output Database: the Case of Global Automotive Production". Available
+#' \href{http://dx.doi.org/10.1111/roie.12178}{here}.
 #' @keywords data, input-output, wiod
 #' @export
 #' @import data.table
 #' @examples
-#' wiot.2005 <- getWIOTv2(period = 2005, format = "wide")
+#' wiot.2005 <- getWIOT(period = 2005, format = "wide")
 #'
+#' ##
 #' ## get all WIOTs at once
+#' ##
 #' ## wiod.list <- list()
 #' ## for(this.year in 2000:2014) {
-#' ##   wiod.list[[as.character(this.year)]] <- getWIOTv2(period = this.year,
+#' ##   wiod.list[[as.character(this.year)]] <- getWIOT(period = this.year,
 #' ##                                                     format = "list")
 #' ##}
 #'
+#' ##
 #' ## decompose the 2005 WIOT using the WWZ decomposition
+#' ##
 #' ## library(decompr)
-#' ## wiot.2005 <- getWIOTv2(period = 2005, format = "list")
+#' ## wiot.2005 <- getWIOT(period = 2005, format = "list")
 #' ## industries <- 1:56
 #' ## countries <- unique(substring(names(wiot.2005$x), 1, 3))
 #' ## decomp <- decomp(x = wiot.2005$Z,
@@ -62,10 +71,10 @@
 #' ##                  V = wiot.2005$v,
 #' ##                  method = "wwz",
 #' ##                  verbose = TRUE)
-getWIOTv2 <- function(period = 2010,
+getWIOT <- function(period = 2010,
                       format = "wide",  # or "long" or "list"
-                      version = "October16", # default and only option
-                      as.DT = TRUE) {        # as data.table?
+                      as.DT = TRUE,     # as data.table?
+                      version = "October16") { # default and only option
 
     ##
     ## sanity checks

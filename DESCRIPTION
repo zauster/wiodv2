@@ -1,5 +1,5 @@
 Package: wiodv2
-Title: Download the 2016 Release of the WIOD
+Title: Download the 2016 release of the WIOD
 Version: 0.0.1
 Authors@R: person("Oliver", "Reiter", email = "reiter@wiiw.ac.at", role = c("aut", "cre"))
 Description: This package allows you to download the WIOD 2016 more easily and in three precomputed formats.
