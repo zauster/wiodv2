@@ -9,7 +9,7 @@
 data(WIOD_IndClass)
 }
 \description{
-A data.table named wiod.indclass with the industry classification
+A data.table named WIOD_IndClass with the industry classification
 used in the WIOD
 }
 \examples{

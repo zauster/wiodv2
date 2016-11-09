@@ -34,33 +34,55 @@ three possible formats (wide, long, list).
 \details{
 If format = "wide" is chosen, the data is returned in a
     wide data.table. This format is the format you know from the
-    excel-sheets (available from www.wiod.org). The format option
-    "long" returns a reshaped/melted data.table. Finally, format =
-    "list" returns a list of four matrices/vectors: 1) matrix Z,
-    the square (2464 x 2464) matrix of intermediates, 2) matrix F,
-    the final demand block (2464 x 220), 3) vector x, gross output
-    per country sector, 4) vector v, value added per country
-    sector, 5) matrix va.block, the valuation block (i.e. taxes,
-    adjustments for exports, international trade margins, etc.) and
-    6) 1-element vector year, specifying the year of the WIOT.
+    excel-sheets (available from www.wiod.org).
+
+    The format option "long" returns a reshaped/melted
+    data.table.
+
+    Finally, format = "list" returns a list of four
+    matrices/vectors: 1) matrix Z, the square (2464 x 2464) matrix
+    of intermediates, 2) matrix F, the final demand block (2464 x
+    220), 3) vector x, gross output per country sector, 4) vector
+    v, value added per country sector, 5) matrix va.block, the
+    valuation block (i.e. taxes, adjustments for exports,
+    international trade margins, etc.) and 6) 1-element vector
+    year, specifying the year of the WIOT.
 }
 \examples{
 wiot.2005 <- getWIOTv2(period = 2005, format = "wide")
 
+## get all WIOTs at once
 ## wiod.list <- list()
-##for(this.year in 2000:2014) {
+## for(this.year in 2000:2014) {
 ##   wiod.list[[as.character(this.year)]] <- getWIOTv2(period = this.year,
 ##                                                     format = "list")
 ##}
+
+## decompose the 2005 WIOT using the WWZ decomposition
+## library(decompr)
+## wiot.2005 <- getWIOTv2(period = 2005, format = "list")
+## industries <- 1:56
+## countries <- unique(substring(names(wiot.2005$x), 1, 3))
+## decomp <- decomp(x = wiot.2005$Z,
+##                  y = wiot.2005$F,
+##                  k = countries,
+##                  i = industries,
+##                  o = wiot.2005$x,
+##                  V = wiot.2005$v,
+##                  method = "wwz",
+##                  verbose = TRUE)
 }
 \author{
 Oliver Reiter
 }
 \references{
-===> xxx TO BE included xxx <===
+Please cite Timmer, M. P., Dietzenbacher, E., Los, B.,
+    Stehrer, R. and de Vries, G. J. (2015),
+    "An Illustrated User Guide to the World Input–Output Database: the Case of Global Automotive Production". Available
+    at \url{http://dx.doi.org/10.1111/roie.12178}
 }
 \seealso{
-www.wiod.org
+\url{www.wiod.org}
 }
 \keyword{data,}
 \keyword{input-output,}
