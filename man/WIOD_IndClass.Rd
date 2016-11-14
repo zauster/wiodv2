@@ -4,13 +4,13 @@
 \name{WIOD_IndClass}
 \alias{WIOD_IndClass}
 \title{Industry classification}
-\format{A 69 x 4 data.table}
+\format{A 69 x 3 data.table}
 \usage{
 data(WIOD_IndClass)
 }
 \description{
 A data.table named \code{WIOD_IndClass} with the industry classification
-used in the WIOD
+used in the WIOD.
 }
 \examples{
 data(WIOD_IndClass)
