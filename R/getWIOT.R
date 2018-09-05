@@ -22,7 +22,7 @@
 #'     Finally, \code{format = "list"} returns a list containing these
 #'     matrices/vectors:
 #' \enumerate{
-#' 
+#'
 #' \item matrix \strong{Z}, the square (2464 x 2464) matrix of intermediates,
 #' \item matrix \strong{F}, the final demand block (2464 x 220),
 #' \item vector \strong{x}, gross output per country sector,
@@ -36,7 +36,7 @@
 #'     a list for format "list"
 #' @author Oliver Reiter
 #' @seealso \url{http://www.wiod.org/database/wiots16}
-#' @references 
+#' @references
 #' Timmer, M. P., Dietzenbacher, E., Los, B., Stehrer, R. and de
 #' Vries, G. J. (2015),
 #' "An Illustrated User Guide to the World Input–Output Database: the Case of Global Automotive Production". Available
@@ -61,12 +61,11 @@
 #' ##
 #' ## library(decompr)
 #' ## wiot.2005 <- getWIOT(period = 2005, format = "list")
-#' ## industries <- 1:56
 #' ## countries <- unique(substring(names(wiot.2005$x), 1, 3))
-#' ## decomp <- decomp(x = wiot.2005$Z,
+#' ## res <- decomp(x = wiot.2005$Z,
 #' ##                  y = wiot.2005$F,
 #' ##                  k = countries,
-#' ##                  i = industries,
+#' ##                  i = wiot.2005$industry.names,
 #' ##                  o = wiot.2005$x,
 #' ##                  V = wiot.2005$v,
 #' ##                  method = "wwz",
@@ -82,15 +81,15 @@ getWIOT <- function(period = 2010,
     if(period < 2000 | period > 2014) {
         stop(" -> WIOTs are available for the years 2000 till 2014!")
     }
-    
+
     if(!(format %in% c("wide", "long", "list"))) {
         stop(" -> The only possible format options are 'wide', 'long' or 'list'!")
     }
-    
+
     if(version != "October16") {
         warning("No other version available. This option is without effect.")
     }
-    
+
     if(!is.logical(as.DT)) {
         stop(" -> Please specify either TRUE or FALSE for the as.DT-option.")
     }
@@ -100,7 +99,7 @@ getWIOT <- function(period = 2010,
     }
 
     ## WIOT2000_October16_ROW_list.rds
-    base.url <- "http://wiiw.ac.at/files/staff-content/reiter/"
+    base.url <- "https://wiiw.ac.at/files/staff-content/reiter/"
 
     res <- readRDS(file = gzcon(url(paste0(base.url, "WIOT", period, "_",
                                            version, "_ROW",
@@ -121,7 +120,7 @@ getWIOT <- function(period = 2010,
     ## } else if(format == "list") {
     ##     res <- wiot.list
     ## }
-    
+
 
     if(format %in% c("wide", "long") & !as.DT) {
         ## print(format)
